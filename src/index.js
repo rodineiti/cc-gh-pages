@@ -11,7 +11,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 
 const httpLink = createHttpLink({
-    uri: ''
+    uri: 'https://black-mage-devel--brunolcarli.repl.co/graphql'
 });
 
 const client = new ApolloClient({
