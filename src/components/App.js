@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom'
 
-import Sidebar from './components/SideBar';
-import Header from './components/Header';
-import Routes from './Routes';
+import Sidebar from './SideBar';
+import Header from './Header';
+import Routes from '../Routes';
 
 function App() {
+  console.log(process.env.NODE_ENV);
   return (
     <div className="wrapper">
       <BrowserRouter>

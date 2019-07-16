@@ -1,18 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Mutation } from 'react-apollo'
 import constants from '../constants';
 
-import { LOGOUT } from '../mutations';
-import { errorsMessage } from '../helpers';
-
 function Header(props) {
-
-    function logout(data) {
-        localStorage.removeItem(constants.AUTH_TOKEN)
-        window.location.href = '/';
-    }
-
     const authToken = localStorage.getItem(constants.AUTH_TOKEN);
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -31,17 +21,13 @@ function Header(props) {
                     <ul className="nav navbar-nav ml-auto">
                         {authToken ? (
                             <li className="nav-item active">
-                                <Mutation
-                                    mutation={LOGOUT}
-                                    onCompleted={data => logout(data)}
-                                    onError={error => errorsMessage(error)}
-                                >
-                                    {mutation => (
-                                        <button
-                                            className="btn btn-default"
-                                            onClick={mutation}>Logout</button>
-                                    )}
-                                </Mutation>
+                                <button
+                                    className="btn btn-default"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        localStorage.removeItem(constants.AUTH_TOKEN)
+                                        window.location.href = '/';
+                                    }}>Logout</button>
                             </li>
                         ) : (
                                 <>

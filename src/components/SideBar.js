@@ -37,10 +37,10 @@ function Sidebar(props) {
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i className="fas fa-briefcase"></i> Sobre</a>
+                    <Link to="/about"><i className="fas fa-briefcase"></i> Sobre</Link>
                 </li>
                 <li>
-                    <a href="#"><i className="fas fa-paper-plane"></i> Contato</a>
+                    <Link to="/contact"><i className="fas fa-paper-plane"></i> Contato</Link>
                 </li>
             </ul>
         </nav>
