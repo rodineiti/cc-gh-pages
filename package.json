@@ -1,5 +1,14 @@
 {
   "name": "cc-gh-pages",
+  "author": "Rodinei Teixeira",
+  "keywords": [
+    "react",
+    "template",
+    "graphql",
+    "bootstrap",
+    "jquery"
+  ],
+  "description": "cc-gh-pages template frontend",
   "version": "0.1.0",
   "homepage": "https://rodineiti.github.io/cc-gh-pages",
   "private": true,
