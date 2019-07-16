@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag';
+import 'react-toastify/dist/ReactToastify.css';
 
+import constants from '../../constants';
 import Content from '../Content';
 
 import './Login.css';
+import { errorsMessage } from '../../helpers';
 
-const LOGIN_MUTATION = gql`
-  mutation login($username: String!, $password: String!) {
-      logIn(username: $username, password: $password) {
-          token
-      }
-  }
-`;
+import { LOGIN_MUTATION } from '../../mutations';
 
 class Login extends Component {
+
+    componentDidMount() {
+        const authToken = localStorage.getItem(constants.AUTH_TOKEN) || null;
+        if (authToken) {
+            window.location.href = '/';
+        }
+    }
 
     state = {
         username: '',
@@ -22,18 +26,26 @@ class Login extends Component {
     };
 
     onSubmit = async data => {
-        console.log(data);
+        this.setDataToken(data.logIn.token);
     }
 
     setDataToken = token => {
-        localStorage.setItem('user-token');
+        localStorage.setItem(constants.AUTH_TOKEN, token);
+        this.redirect('Login realizado com sucesso.', 1000, '/');
+    }
+
+    redirect(msg, timeout, url) {
+        toast.success(msg);
+        setTimeout(() => {
+            window.location.href = url;
+        }, timeout);
     }
 
     render() {
         const { username, password } = this.state;
         return (
             <Content>
-                <form className="form-signin text-center">
+                <div className="form-signin text-center">
                     <img className="mb-4" src="https://via.placeholder.com/75" alt="img" />
                     <h1 className="h3 mb-3 font-weight-normal">Login - Civil Cultural</h1>
                     <div className="form-group">
@@ -58,12 +70,17 @@ class Login extends Component {
                         mutation={LOGIN_MUTATION}
                         variables={{ username, password }}
                         onCompleted={data => this.onSubmit(data)}
+                        onError={error => errorsMessage(error)}
                     >
                         {mutation => (
-                            <button className="btn btn-lg btn-primary btn-block" type="button" onClick={mutation}>Entrar <i className="fas fa-sign-in-alt"></i></button>
+                            <button
+                                className="btn btn-lg btn-primary btn-block"
+                                type="button"
+                                onClick={mutation}
+                                disabled={!username || !password}>Entrar <i className="fas fa-sign-in-alt"></i></button>
                         )}
                     </Mutation>
-                </form>
+                </div>
             </Content>
         )
     };

@@ -1,7 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Mutation } from 'react-apollo'
+import constants from '../constants';
+
+import { LOGOUT } from '../mutations';
+import { errorsMessage } from '../helpers';
 
 function Header(props) {
+
+    function logout(data) {
+        localStorage.removeItem(constants.AUTH_TOKEN)
+        window.location.href = '/';
+    }
+
+    const authToken = localStorage.getItem(constants.AUTH_TOKEN);
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -17,23 +29,35 @@ function Header(props) {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="nav navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <button className="btn btn-success" >Olá Rodinei</button>
-                        </li>
-                        <li className="nav-item active">
-                            <button className="btn btn-default">Logout</button>
-                        </li>
-                        <li className="nav-item active">
-                            <Link to="/login" className="nav-link" >Login</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/register">Registro</Link>
-                        </li>
+                        {authToken ? (
+                            <li className="nav-item active">
+                                <Mutation
+                                    mutation={LOGOUT}
+                                    onCompleted={data => logout(data)}
+                                    onError={error => errorsMessage(error)}
+                                >
+                                    {mutation => (
+                                        <button
+                                            className="btn btn-default"
+                                            onClick={mutation}>Logout</button>
+                                    )}
+                                </Mutation>
+                            </li>
+                        ) : (
+                                <>
+                                    <li className="nav-item active">
+                                        <Link to="/login" className="nav-link" >Login</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/register">Registro</Link>
+                                    </li>
+                                </>
+                            )}
                     </ul>
                 </div>
             </div>
         </nav>
-    )
+    );
 }
 
 export default Header;

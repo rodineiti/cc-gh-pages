@@ -9,9 +9,11 @@ import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
+import constants from './constants';
+import { ToastContainer } from 'react-toastify';
 
 const httpLink = createHttpLink({
-    uri: 'https://black-mage-devel--brunolcarli.repl.co/graphql'
+    uri: constants.API_URL
 });
 
 const client = new ApolloClient({
@@ -22,6 +24,7 @@ const client = new ApolloClient({
 ReactDOM.render(
     <ApolloProvider client={client}>
         <App />
+        <ToastContainer />
     </ApolloProvider>,
     document.getElementById('root')
 );
