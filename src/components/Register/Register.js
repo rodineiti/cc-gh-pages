@@ -14,7 +14,11 @@ class Register extends Component {
     componentDidMount() {
         const authToken = localStorage.getItem(constants.AUTH_TOKEN) || null;
         if (authToken) {
-            window.location.href = '/';
+            if (process.env.NODE_ENV === 'development') {
+                window.location.href = '/';
+            } else {
+                window.location.href = '/cc-gh-pages';
+            }
         }
     }
 
@@ -26,13 +30,17 @@ class Register extends Component {
     };
 
     onSubmit = async data => {
-        this.redirect('Cadastro realizado com sucesso, estamos direcionando para o login', 2000, '/login');
+        this.redirect('Cadastro realizado com sucesso', 2000, '/');
     }
 
     redirect(msg, timeout, url) {
         toast.success(msg);
         setTimeout(() => {
-            window.location.href = url;
+            if (process.env.NODE_ENV === 'development') {
+                window.location.href = url;
+            } else {
+                window.location.href = '/cc-gh-pages';
+            }
         }, timeout);
     }
 

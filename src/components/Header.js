@@ -26,7 +26,11 @@ function Header(props) {
                                     onClick={(e) => {
                                         e.preventDefault();
                                         localStorage.removeItem(constants.AUTH_TOKEN)
-                                        window.location.href = '/';
+                                        if (process.env.NODE_ENV === 'development') {
+                                            window.location.href = '/';
+                                        } else {
+                                            window.location.href = '/cc-gh-pages';
+                                        }
                                     }}>Logout</button>
                             </li>
                         ) : (

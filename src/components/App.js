@@ -6,7 +6,6 @@ import Header from './Header';
 import Routes from '../Routes';
 
 function App() {
-  console.log(process.env.NODE_ENV);
   return (
     <div className="wrapper">
       <BrowserRouter>
