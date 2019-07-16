@@ -23,7 +23,7 @@ function Sidebar(props) {
                     </Link>
                 </li>
                 <li>
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i className="fas fa-list"></i> Items</a>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i className="fas fa-list"></i> Itens</a>
                     <ul className="collapse list-unstyled" id="homeSubmenu">
                         <li>
                             <a href="#">Item 1</a>
